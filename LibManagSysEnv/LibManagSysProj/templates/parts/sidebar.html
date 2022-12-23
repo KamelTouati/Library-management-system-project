@@ -1,0 +1,88 @@
+  <!-- Main Sidebar Container -->
+  <aside style="position: fixed;" class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url 'index' %}" class="brand-link">
+      <i class="fa-solid fa-house"></i>
+      <span class="brand-text font-weight-light m-auto">الصفحة الرئيسية</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+          <li class="nav-item">
+            <a href="{% url 'books' %}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                الكتب المضافة
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                أنواع الكتب
+                <i class="fas fa-angle-left right"></i>
+                
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              
+                  <li class="nav-item">
+                    <a id="addcat" href="#" class="nav-link">
+                        <i class="fa fa-plus "></i>
+                        <p  class="text-light"> إضافة نوع </p>
+                    </a>
+                  </li> 
+              <form id="cat" method="POST">
+                {% csrf_token %} 
+                <div id="categoryInput">
+                  {{CategoryForm}}
+
+                  <button type="submit" class="btn btn-success">حفظ</button>
+                  <button id="backcat" class="btn btn-primary ">تراجع</button>
+                </div>
+              </form>  
+            {% for category in categories %}
+              <li style="cursor: pointer;" class="nav-item category{{category.id}}">
+                <a id="" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>{{category.name}}</p>
+                </a>
+              </li>
+            {% endfor %}
+        
+
+            </ul>
+          </li>
+
+          <li class="nav-header">الحالة</li>
+          
+          <li style="cursor: pointer;" class="nav-item statussold">
+            <a id="statusSold" class="nav-link">
+              <i class="nav-icon far fa-circle text-danger"></i>
+              <p class="text">تم بيعه</p>
+            </a>
+          </li>
+          <li style="cursor: pointer;" class="nav-item statusrental">
+            <a id="" class="nav-link">
+              <i class="nav-icon far fa-circle text-warning"></i>
+              <p>تم استعارته</p>
+            </a>
+          </li>
+          <li style="cursor: pointer;" class="nav-item statusavailable">
+            <a id="" class="nav-link">
+              <i class="nav-icon far fa-circle text-info"></i>
+              <p>متاح</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

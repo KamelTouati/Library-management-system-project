@@ -1,0 +1,266 @@
+{% load static %}
+<!DOCTYPE html>
+<html  lang="ar">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Library Management</title>
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'plugins/jquery_datepacker/jquery_ui.css' %}">
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="{% static 'http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte_ar.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/css/main.css' %}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+</head>
+<body dir="rtl" class="hold-transition sidebar-mini">
+    {% include 'parts/nav.html' %}
+    {% include 'parts/sidebar.html' %}
+    {% block content %}
+    
+    {% endblock content %}
+    
+    {% include 'parts/footer.html' %}
+  </div>
+  
+  <!-- ./wrapper -->
+  
+    <!-- REQUIRED SCRIPTS -->
+<script>
+  $("#categoryInput").hide();
+  $("#addcat").click(function(){
+    $("#categoryInput").show();
+  });
+  $("#backcat").click(function(){
+    $("#categoryInput").hide();
+  });
+
+  {% for book in books %}
+    $(".category{{book.category.id}}").click(function(){ 
+      $(".bookHide").hide();
+      $(".book{{book.category.id}}").show();
+    });
+  {% endfor %}
+
+  {% for book in books %}
+  $(".status{{book.status}}").click(function(){
+      $(".bookHide").hide();
+      $(".book{{book.status}}").show();
+  });
+  {% endfor %}
+
+  $("#retal_price_day").keyup(function(){
+    $("#total_retal").val($("#retal_price_day").val() * $("#retal_period").val());
+  });
+  $("#retal_period").keyup(function(){
+    $("#total_retal").val($("#retal_price_day").val() * $("#retal_period").val());
+  });
+
+  $(document).ready(function(){
+    var total = 0;
+    $(".totalPrice").each(function(){
+      $(this).hide();
+      total += parseFloat($(this).text())
+    })
+    $("#totalsalarys").text("$"+total);
+  })
+
+  $(document).ready(function(){
+    var total1 = 0;
+    $(".totalPriceSold").each(function(){
+      $(this).hide();
+      total1 += parseFloat($(this).text())
+    })
+    $(".total1").text(total1);
+    $(".total1").hide();
+  })
+
+  $(document).ready(function(){
+    var total2 = 0;
+    $(".totalPriceRental").each(function(){
+      $(this).hide();
+      total2 += parseFloat($(this).text())
+    })
+    $(".total2").text(total2);
+    $(".total2").hide();
+
+  })
+</script>
+
+<script src="{% static 'plugins/jquery_datepacker/jquery_ui.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+
+<!-- ICONS -->
+<script src="{% static 'dist/js/all.min.js' %}"></script>
+<!-- OPTIONAL SCRIPTS -->
+
+<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
+
+<script src="{% static 'dist/js/demo.js' %}"></script>
+<script>
+  const d = new Date();
+  let nextYear = parseInt(d.getFullYear()) + 1; 
+  $("#year").text(d.getFullYear() + "-" + nextYear);
+</script>
+
+<!--<script src="dist/js/pages/dashboard3.js'"></>
+-->
+<script>
+  $(document).ready(function(){
+    $('#myModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+    });
+/*here i will make loop for get id category and status for contact with books */
+/*حساب اجمالي الارباح و هي عبارة عن حاصل جمع سعر الكتب عند البيع بالاضافة الى سعر استعارة الكتاب*/
+  });
+</script>
+<script>
+  
+
+$(function () {
+  'use strict'
+ 
+  var ticksStyle = {
+    fontColor: '#495057',
+    fontStyle: 'bold'
+  }
+
+  var mode      = 'index'
+  var intersect = true
+
+  var $salesChart = $('#sales-chart')
+
+  var salesChart  = new Chart($salesChart, {
+
+    type   : 'bar',
+    
+    data   : {
+
+      labels  : [
+          
+
+        'تفاصيل الارباح',
+
+      ],
+
+
+      datasets: [
+        {
+          backgroundColor: '#2192FF',
+          borderColor    : '#2192FF',
+          data           : [ 
+              $(".total1").text(),
+          ]
+        },
+        {
+          backgroundColor: '#ced4da',
+          borderColor    : '#ced4da',
+          data           : [ 
+              $(".total2").text(),
+,
+          ]
+        }
+      ]
+    },
+
+   
+   
+   options: {
+      maintainAspectRatio: false,
+      tooltips           : {
+        mode     : mode,
+        intersect: intersect
+      },
+      hover              : {
+        mode     : mode,
+        intersect: intersect
+      },
+      legend             : {
+        display: false
+      },
+      scales             : {
+        yAxes: [{
+          // display: false,
+          gridLines: {
+            display      : true,
+            lineWidth    : '4px',
+            color        : 'rgba(0, 0, 0, .2)',
+            zeroLineColor: 'transparent'
+          },
+          ticks    : $.extend({
+            beginAtZero: true,
+
+            // Include a dollar sign in the ticks
+            callback: function (value, index, values) {
+              if (value >= 1000) {
+                value /= 1000
+                value += 'k'
+              }
+              return '$' + value
+            }
+          }, ticksStyle)
+        }],
+        xAxes: [{
+          display  : true,
+          gridLines: {
+            display: false
+          },
+          ticks    : ticksStyle
+        }]
+      }
+    }
+  });
+  
+ var pieChart = document.getElementById('visitors-chart').getContext('2d')
+
+  var myPieChart = new Chart(pieChart, {
+    type: 'pie',
+    data: {
+      datasets: [{
+        data: ['{{booksAvailable}}','{{booksSold}}','{{booksRetal}}'],
+        backgroundColor :["#27c100","#f3545d","#fdaf4b"],
+        borderWidth: 10,
+        
+      }],
+      labels: ['Available', 'Sold', 'Rented'] 
+    },
+    options : {
+      responsive: true, 
+      maintainAspectRatio: false,
+      legend: {
+        position : 'bottom',
+        labels : {
+          fontColor: '#000',
+          fontSize: 15,
+          usePointStyle : true,
+          padding:30
+        }
+      },
+      pieceLabel: {
+        render: 'percentage',
+        fontColor: 'white',
+        fontSize: 14,
+      },
+
+
+    }
+  })
+
+})
+
+
+ 
+</script>
+
+</body>
+</html>

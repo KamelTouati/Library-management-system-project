@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="direction: rtl;" class="wrapper">
+
+    <!-- Content Wrapper. Contains page content -->
+    <div   class="content-wrapper">
+      <!-- Content Header (Page header) -->
+  <div  class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">تعديل الكتاب</h3>
+      </div>
+      <!-- /.card-header -->
+      <!-- form start -->
+      <form  method="POST" enctype="multipart/form-data">
+      {%csrf_token%}
+        <div class="card-body">
+          {{form}}
+        </div>
+        <!-- /.card-body -->
+  
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary">حفظ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+{% endblock content %}

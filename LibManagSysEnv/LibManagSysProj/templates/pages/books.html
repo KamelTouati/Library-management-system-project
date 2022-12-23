@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div style="direction: rtl;" class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div   class="content-wrapper p-5">
+      <!-- Content Header (Page header) -->
+
+              <div class="row mb-2">
+                <div class="col-sm-6">
+                  <h1>الكتب</h1>
+                </div>
+              </div>
+          </section>
+      
+          <!-- Main content -->
+          <section class="content">                  
+            <!-- Default box -->
+            <div class="card card-solid">
+              <div class="card-body pb-0">
+                <div class="row d-flex align-items-stretch">
+                  {% for book in books %}
+                  <!-- بداية الكتاب -->
+                  <div   class="col-12 col-sm-6 col-md-4 bookHide book{{book.category.id}} book{{book.status}}">
+                    <div  id="" class="card bg-light">
+                      <div  class="card-header text-muted border-bottom-0">
+                        {{book.category}}
+                      </div>
+                      <div class="card-body pt-0">
+                        <div class="row">
+                          <div class="col-7">
+                            <h2 class="lead"><b>{{book.title}}</b></h2>
+                            <ul class="text-muted">
+                              <li class="small"><span class="fa-li"></span>الحالة: {{book.status}}</li>
+                              {% if book.price %}
+                              <li class="small"><span class="fa-li"></span>السعر: {{book.price}}</li>
+                              {% elif book.retal_price_day %}
+                              <li class="small"><span class="fa-li"></span>في اليوم: {{book.retal_price_day}}</li>
+                              {% endif %}
+                            </ul>
+                          </div>
+                          <div class="col-5 text-center">
+                              {% if book.photo_author %}
+                              <img style="height: 120px; width: 120px;"  src="{{book.photo_author.url}}" alt="" class="img-circle img-fluid">
+                              {% else %}
+                              <img style="height: 120px; width: 120px;"  src="" alt="" class="img-circle img-fluid">
+                              {% endif%}
+                            </div>
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        <div class="text-right">
+                          <a href="{% url 'delete' book.id %}" class="btn btn-sm bg-danger">
+                            <i class="fas fa-trash mx-2"></i>
+                          </a>
+                          <a href="{% url 'update' book.id %}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-book mx-2"></i> تعديل
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <!-- نهاية الكتاب -->
+                  {% endfor %}
+                </div>
+              </div>
+              <!-- /.card-body -->
+
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+      
+          </section>
+          <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+      
+    </div>
+    <!-- /.content-wrapper -->
+  </div>
+
+{% endblock content %}

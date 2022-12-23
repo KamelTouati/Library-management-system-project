@@ -1,0 +1,37 @@
+:root {
+    --color1: #FBF8F1;
+    --color2: #F7ECDE;
+    --color3: #E9DAC1;
+    --color4: #2192FF;
+}
+
+* {
+    border-radius: 20px !important;
+}
+
+.sidebar-dark-primary,
+.bg-info,
+.btn-primary,
+.bg-primary {
+    background: var(--color4) !important;
+}
+
+.content-wrapper {
+    background: var(--color1);
+}
+
+.navbar-white,
+.main-footer {
+    background: var(--color3);
+}
+
+.form-control-navbar,
+.btn-navbar {
+    background: var(--color2) !important;
+}
+
+.card {
+    background: var(--color1) !important;
+    border-radius: 20px;
+}
+
